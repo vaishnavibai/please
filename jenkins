@@ -1,0 +1,28 @@
+pipeline {
+     agent any 
+     tools {
+     maven 'maven'
+           }
+     stages {
+          stage('SCM-Checkout') {
+              steps {
+                   git branch: 'main', credentialsId: 'vaishu', url: 'https://github.com/vaishnavibai/please.git'
+              }
+           }
+           stage('clean-compile') {
+               steps {
+                    sh "mvn clean compile"
+                }
+            }
+            stage('package') {
+                 steps {
+                      sh "mvn package"
+                  }
+             }
+             stage('ansible') {
+                   steps {
+                       ansibleplaybook become: true, credentialsId: 'vaishu', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'install_httpd.yml'
+                    }
+             }
+          }
+        }
