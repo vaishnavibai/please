@@ -21,8 +21,8 @@ pipeline {
              }
              stage('ansible') {
                    steps {
-                       ansibleplaybook become: true, credentialsId: 'vaishu', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'install_httpd.yml'
+                       ansiblePlaybook become: true, credentialsId: 'vaishu', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts', playbook: 'install_httpd.yml'
                     }
              }
-          }
+           }
         }
